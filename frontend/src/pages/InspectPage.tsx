@@ -38,7 +38,7 @@ export default function InspectPage({ isQualityEngineer }: InspectPageProps) {
     setSuccessMessage(null);
   }
 
-  async function handleRunAI() {
+async function handleRunAI() {
     if (!selectedBatchId || !selectedFile) return;
     setIsAnalyzing(true);
     setPrediction(null);
@@ -48,8 +48,9 @@ export default function InspectPage({ isQualityEngineer }: InspectPageProps) {
       const result = await predictDefect(selectedBatchId, selectedFile);
       setPrediction(result);
       setFinalDefect(result.predictedDefectType);
-    } catch (err: any) {
-      alert(`AI Analysis Error: ${err.message}`);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      alert(`AI Analysis Error: ${errorMessage}`);
     } finally {
       setIsAnalyzing(false);
     }
@@ -73,8 +74,9 @@ export default function InspectPage({ isQualityEngineer }: InspectPageProps) {
       setSelectedFile(null);
       setImagePreviewUrl(null);
       setComments('');
-    } catch (err: any) {
-      alert(`Submission Error: ${err.message}`);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      alert(`Submission Error: ${errorMessage}`);
     } finally {
       setIsSubmitting(false);
     }

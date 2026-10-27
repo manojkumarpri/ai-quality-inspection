@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Layers, Search, AlertTriangle, CheckCircle, Filter } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Layers, AlertTriangle, CheckCircle, Filter } from 'lucide-react';
 import { InspectionRecord } from '../types/api';
 import { getInspections, fetchInspectionImage } from '../services/inspections.api';
 
@@ -11,30 +11,37 @@ export default function HistoryPage() {
   const [previewImageMap, setPreviewImageMap] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    loadHistory();
-  }, [filterDefect]);
+    let isMounted = true;
 
-  async function loadHistory() {
-    try {
-      const inspectionList = await getInspections({ defectType: filterDefect });
-      setInspections(inspectionList);
+    async function loadHistory() {
+      try {
+        const inspectionList = await getInspections({ defectType: filterDefect });
+        if (!isMounted) return;
+        setInspections(inspectionList);
 
-      const imageMap: Record<string, string> = {};
-      for (const insp of inspectionList) {
-        if (!previewImageMap[insp.imageUrl]) {
+        const imageMap: Record<string, string> = {};
+        for (const insp of inspectionList) {
           try {
             const blobUrl = await fetchInspectionImage(insp.imageUrl);
+            if (!isMounted) return;
             imageMap[insp.imageUrl] = blobUrl;
-          } catch (e) {
+          } catch {
             console.error('Failed to load blob for image', insp.imageUrl);
           }
         }
+        if (!isMounted) return;
+        setPreviewImageMap(prev => ({ ...prev, ...imageMap }));
+      } catch (err) {
+        console.error('Failed to load history', err);
       }
-      setPreviewImageMap(prev => ({ ...prev, ...imageMap }));
-    } catch (err) {
-      console.error('Failed to load history', err);
     }
-  }
+
+    loadHistory();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [filterDefect]);
 
   return (
     <div className="space-y-6">

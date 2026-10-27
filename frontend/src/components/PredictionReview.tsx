@@ -1,6 +1,6 @@
 import React from 'react';
 import { PredictionResult } from '../types/api';
-import { AlertTriangle, CheckCircle2, ShieldAlert, Sparkles, MessageSquare } from 'lucide-react';
+import { AlertTriangle, CheckCircle2, Sparkles, MessageSquare } from 'lucide-react';
 
 const DEFECT_TYPES = ['Scratch', 'Dent', 'Paint Issue', 'Missing Component', 'No Defect'];
 
