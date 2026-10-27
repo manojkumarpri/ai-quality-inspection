@@ -16,6 +16,7 @@
     "db:migrate": "prisma migrate dev --name init",
     "db:seed": "tsx prisma/seed.ts",
     "security:audit": "npm audit --audit-level=high",
+    "typecheck": "tsc --noEmit",
     "prepare": "husky"
   },
   "dependencies": {
