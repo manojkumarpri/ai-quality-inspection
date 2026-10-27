@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: quality-inspection-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: quality_user
+      POSTGRES_PASSWORD: quality_password
+      POSTGRES_DB: quality_inspection
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

@@ -1,0 +1,43 @@
+# --- Dependencies ---
+node_modules/
+**/node_modules/
+
+# --- Build & Output ---
+dist/
+build/
+out/
+target/
+*.tsbuildinfo
+
+# --- Environment Files & Secrets ---
+.env
+.env.local
+.env.*.local
+backend/.env
+frontend/.env
+
+# --- Database & Storage (Prisma / Local Uploads) ---
+backend/storage/
+*.db
+*.sqlite
+
+# --- Logs & Testing ---
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+coverage/
+.nyc_output/
+
+# --- IDE & Editor Files ---
+.vscode/
+.idea/
+*.suo
+*.swp
+
+# --- OS Generated Files ---
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db

@@ -1,0 +1,63 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  QUALITY_ENGINEER
+  PRODUCTION_SUPERVISOR
+}
+
+model User {
+  id          String       @id @default(uuid())
+  name        String
+  role        Role
+  createdAt   DateTime     @default(now())
+  inspections Inspection[]
+  predictions AIPrediction[]
+}
+
+model Batch {
+  id             String       @id @default(uuid())
+  batchCode      String       @unique
+  productName    String
+  productionLine String
+  createdAt      DateTime     @default(now())
+  inspections    Inspection[]
+  predictions    AIPrediction[]
+}
+
+model AIPrediction {
+  id                  String       @id @default(uuid())
+  batchId             String
+  batch               Batch        @relation(fields: [batchId], references: [id])
+  provider            String
+  model               String
+  predictedDefectType String
+  confidence          Float?
+  createdById         String
+  createdBy           User         @relation(fields: [createdById], references: [id])
+  createdAt           DateTime     @default(now())
+  inspection          Inspection?
+}
+
+model Inspection {
+  id                    String       @id @default(uuid())
+  batchId               String
+  batch                 Batch        @relation(fields: [batchId], references: [id])
+  predictionId          String       @unique
+  prediction            AIPrediction @relation(fields: [predictionId], references: [id])
+  imageRef              String
+  aiPredictedDefectType String
+  aiConfidence          Float?
+  finalDefectType       String
+  wasOverridden         Boolean
+  comments              String?
+  inspectorId           String
+  inspector             User         @relation(fields: [inspectorId], references: [id])
+  inspectedAt           DateTime     @default(now())
+}

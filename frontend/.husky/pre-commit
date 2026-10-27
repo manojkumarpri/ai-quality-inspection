@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔒 Running Security Vulnerability Audit..."
+npm audit --audit-level=high || {
+  echo "❌ Security vulnerability check failed! Run 'npm audit fix' to resolve."
+  exit 1
+}
+
+echo "🔍 Running TypeScript Type Check..."
+npm run typecheck
+
+echo "🧹 Running Lint-Staged (ESLint & Prettier)..."
+npx lint-staged
+
+echo "🧪 Running Unit & Integration Tests..."
+npm run test:run
