@@ -12,6 +12,7 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,css,json,md}\"",
     "test": "vitest run",
     "security:audit": "npm audit --audit-level=high",
+    "typecheck": "tsc --noEmit",
     "prepare": "husky"
   },
   "keywords": [],
