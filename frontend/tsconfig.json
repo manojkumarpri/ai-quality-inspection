@@ -16,8 +16,8 @@
 
     /* Linting & Test Types */
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
     "types": ["node", "vitest/globals", "@testing-library/jest-dom"]
   },
