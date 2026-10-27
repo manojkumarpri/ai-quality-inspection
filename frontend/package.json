@@ -18,16 +18,16 @@
   "keywords": [],
   "author": "Manojkumar Manikkam",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "lint-staged": {
-  "*.{ts,tsx}": [
-    "eslint --fix",
-    "prettier --write"
-  ],
-  "*.{css,json,md}": [
-    "prettier --write"
-  ]
-},
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,json,md}": [
+      "prettier --write"
+    ]
+  },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
     "@testing-library/react": "^16.3.3",
